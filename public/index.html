@@ -1,0 +1,266 @@
+<html>
+
+    <head>
+
+        <link rel="stylesheet" href="./style.css">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+    </head>
+
+        <body>
+
+            <div class="music-container">
+
+            <div class="music-header">
+
+            <i class="fa fa-angle-left"></i>
+
+            <div class="title"><p>My Music</p></div>
+
+            <i class="fa fa-search"></i>
+
+            </div>     
+
+            <div class="music-playlist">
+
+            <div class="music-menu text-center">
+
+                <div class="menu">
+
+                <ul>
+
+                    <li><a href="#">songs</a></li>
+
+                    <li><a href="#">artist</a></li>
+
+                    <li><a href="#">description</a></li>
+
+                </ul>    
+
+                </div>
+
+            </div> 
+
+            <div class="music-box" id="demo">
+
+				
+				
+
+            </div> 
+			</div>
+
+                <div class="music-play">
+
+                    <div class="play-image">
+
+                        <img id="songImg" src="">
+
+                    </div>
+
+                    <div class="play-controls">
+
+                        <div class="controls">
+
+                        <div class="song-name">
+
+                            <h5 id="songTitle">song name</h5>
+
+                            <p id="songDescription">song description</p>
+
+                        </div>
+
+                        <div class="play-icon">
+					
+                        <i class="fa fa-step-backward" onclick="back()"></i> 
+
+                        <i id="playButton" class="fa fa-play" onclick="playOrPauseSong()"></i> 
+						
+                        <i class="fa fa-step-forward" onclick="next()"></i>
+						
+    
+
+                        </div>
+
+                        </div>
+
+                        <div class="music-progress">
+
+                        <div class="progress">
+
+                        <div id="fill"  class="progress-bar"></div>
+
+                        </div>
+
+
+
+                        </div>
+
+                    </div>    
+
+                </div>  
+
+            </div>   
+
+           <script type="text/javascript">
+
+        var arr = [
+			{	
+
+                name:"song1",
+
+                url:"song1.mp3",
+
+                artist:"arjun",
+
+                description:"vaikuntapuram lo"
+
+            },
+			{	
+
+                name:"song2",
+
+                url:"song2.mp3",
+
+                artist:"allu",
+
+                description:"movie name"
+
+            },
+			{	
+
+                name:"song3",
+
+                url:"song3.mp3",
+
+                artist:"aravind",
+
+                description:"calling"
+
+            },
+			{	
+
+                name:"song4",
+
+                url:"song4.mp3",
+
+                artist:"chinni",
+
+                description:"hello"
+
+            },
+            {
+
+                name:"song5",
+
+                url:"song5.mp3",
+
+                artist:"ajith",
+
+                description:"love"
+
+            },
+
+];
+
+arr.forEach(myFunction);
+
+function myFunction(item, index) {
+            var newDiv1 = document.createElement("div");
+            var newDiv2 = document.createElement("div");
+            var img = document.createElement("img");
+            var newDiv3 = document.createElement("div");
+            var h6 = document.createElement("h6");
+            var p = document.createElement("p");
+            var i = document.createElement("i");
+            newDiv1.classList.add("music-info");
+            newDiv2.classList.add("music-img");
+            img.scr = "";
+            newDiv3.classList.add("music-name");
+			i.setAttribute("class", "fa fa-ellipsis-v");
+            h6.innerHTML= "Name: " + item.name;
+            p.innerHTML= "Artist: " + item.artist + " Description: " + item.description;
+            newDiv2.appendChild(img);
+            newDiv1.appendChild(newDiv2);
+            newDiv3.appendChild(h6);
+            newDiv3.appendChild(p);
+            newDiv1.appendChild(newDiv3);
+            newDiv1.appendChild(i);
+            document.getElementById("demo").appendChild(newDiv1); 
+            
+}
+
+var song = new Audio();
+var currentSong =0;
+songTitle = document.getElementById("songTitle");
+songDescription = document.getElementById("songDescription");
+songImg = document.getElementById("songImg");
+fill = document.getElementById("fill");
+
+window.onload = playSong();
+
+function playSong(){
+
+	song.src = arr[currentSong].url;
+	songTitle.textContent = arr[currentSong].name;
+	songDescription.textContent = arr[currentSong].description;
+	songImg.textContent = "";
+	
+	song.play();
+}
+
+function playOrPauseSong(){
+
+	if(song.paused){
+		song.play();
+		var playButton = document.getElementById("playButton");
+		playButton.removeAttribute("class");
+		playButton.setAttribute("class","fa fa-pause"); 
+		}
+		else{
+			song.pause();
+			var playButton = document.getElementById("playButton");
+			playButton.removeAttribute("class");
+			playButton.setAttribute("class","fa fa-play"); 
+		}
+		
+}
+
+song.addEventListener('timeupdate',function(){
+ var position = song.currentTime / song.duration;
+ fill.style.width = position * 100 +'%';
+});
+		
+function next(){
+	currentSong++;
+	if(currentSong> arr.length - 1)
+		{
+			currentSong = 0;
+		}
+	playSong();
+	var playButton = document.getElementById("playButton");
+	playButton.setAttribute("class","fa fa-pause"); 
+}
+
+function back(){
+	currentSong--;
+	if(currentSong< 0)
+		{
+			currentSong = arr.length - 1;
+		}
+	playSong();
+	var playButton = document.getElementById("playButton");
+	playButton.setAttribute("class","fa fa-pause"); 
+}
+
+        </script>
+		
+
+        </body>
+
+</html>
